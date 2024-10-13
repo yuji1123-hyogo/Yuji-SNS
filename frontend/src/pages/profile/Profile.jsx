@@ -13,6 +13,8 @@ function Profile() {
     const {user:currentUser}=useContext(AuthContext);
   const [user,setUser]=useState({username:"",desc:""})
   const [isFollowing, setIsFollowing] = useState(false);
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+  const IMG_URL = process.env.REACT_APP_IMAGE_URL || "http://localhost:3000";
 
 
     // useParamsでURLからパラメータを取得
@@ -21,9 +23,10 @@ function Profile() {
   //各ユーザーのプロフィールを取得するには:クエリを使う
   //api/users?username=yujiのようなエンドポイントを持つapiを作成する
   const fetchUser=async()=>{
+   
 
     //useParamsでパラメータを読み取りバックエンドに渡すエンドポイントを作成
-    const response = await axios.get(`/users?username=${username}`)
+    const response = await axios.get(`${API_URL}/users?username=${username}`);
     //response.dataを関数外部で扱うためにstateを利用
     console.log(response.data)
     setUser(response.data)
@@ -43,11 +46,11 @@ function Profile() {
         try {
           if (isFollowing) {
               // フォロー解除
-              await axios.put(`/users/${user._id}/follow`, { userId: currentUser._id });
+              await axios.put(`${API_URL}/users/${user._id}/follow`, { userId: currentUser._id });
               setIsFollowing(false);
           } else {
               // フォロー
-              await axios.put(`/users/${user._id}/follow`, { userId: currentUser._id });
+              await axios.put(`${API_URL}/users/${user._id}/follow`, { userId: currentUser._id });
               setIsFollowing(true);
           }
       } catch (err) {
@@ -63,8 +66,8 @@ function Profile() {
       <div className="profileRight">
         <div className="profileRightTop">
             <div className="profileCover">
-                <img src="/logo512.png" alt="" className="profileCoverImg" />
-                <img src="/favicon.ico" alt="" className="profileUserImg" />
+                <img src={user.profilePicture ? `${IMG_URL}${user.coverPicture}` : `${IMG_URL}/assets/post/1.jpeg`} alt="" className="profileCoverImg" />
+                <img src={user.coverPicture ? `${IMG_URL}${user.coverPicture}` : `${IMG_URL}/assets/post/1.jpeg`} alt="" className="profileUserImg" />
             </div>    
             <div className="profileInfo">
                 <h4 className="profileInfoName">{user.username}</h4>

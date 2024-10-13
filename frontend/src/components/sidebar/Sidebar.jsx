@@ -11,6 +11,8 @@ function Sidebar() {
     const {user}=useContext(AuthContext)
     const [followingList, setFollowingList] = useState([]);
 
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+
 
     //フォローしている相手の取得
     // フォローしている相手の取得
@@ -22,7 +24,7 @@ function Sidebar() {
                 // 全てのフォローしているユーザーを取得
                 const responses = await Promise.all(
                     followingIdsList.map((id) =>
-                        axios.get(`/users/${id}`)
+                        axios.get(`${API_URL}/users/${id}`)
                     )
                 );
 
@@ -40,12 +42,12 @@ function Sidebar() {
     <div className="sidebar">
         <div className="sidebarWrapper">
             <ul className="sidebarList">
-                <li className="sidebarListItem">
-                    <Home className='sidebarIcon'/>
-                    <Link to="/" style={{textDecoration:"none",color:"black"}}>
-                    <span className="sidebarListItemText">ホーム</span>
-                    </Link>
-                </li>
+                <Link to="/" style={{textDecoration:"none",color:"black"}}>
+                    <li className="sidebarListItem">
+                        <Home className='sidebarIcon'/>
+                        <span className="sidebarListItemText">ホーム</span>
+                    </li>
+                </Link>
                 <li className="sidebarListItem">
                     <Search className='sidebarIcon'/>
                     <span className="sidebarListItemText">検索</span>
@@ -62,12 +64,12 @@ function Sidebar() {
                     <Bookmark className='sidebarIcon'/>
                     <span className="sidebarListItemText">ブックマーク</span>
                 </li>
-                <li className="sidebarListItem">
-                    <Person className='sidebarIcon'/>
-                    <Link to={`/profile/${user.username}`} style={{textDecoration:"none",color:"black"}}>
-                    <span className="sidebarListItemText">プロフィール</span>
-                    </Link>
-                </li>
+                <Link to={`/profile/${user.username}`} style={{textDecoration:"none",color:"black"}}>
+                    <li className="sidebarListItem">
+                        <Person className='sidebarIcon'/>
+                        <span className="sidebarListItemText">プロフィール</span>
+                    </li>
+                </Link>
                 <li className="sidebarListItem">
                     <Settings className='sidebarIcon'/>
                     <span className="sidebarListItemText">設定</span>

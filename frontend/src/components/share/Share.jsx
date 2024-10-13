@@ -4,6 +4,11 @@ import { Analytics, Face, Gif, Image } from '@mui/icons-material'
 import { AuthContext } from '../../states/AuthContext'
 import axios from 'axios'
 function Share() {
+
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+    const IMG_URL = process.env.REACT_APP_IMAGE_URL || "http://localhost:3000";
+
+    
     const [file,setFile] = useState(null);
 
     const {user}=useContext(AuthContext)
@@ -17,7 +22,7 @@ function Share() {
         }
 
         try{
-           await axios.post("/posts",newPost)
+           await axios.post(`${API_URL}/posts`,newPost)
            window.location.reload();
         }catch(e){
             console.log(e)
@@ -29,7 +34,7 @@ function Share() {
     <div className="share">
         <div className="shareWrapper">
             <div className="shareTop">
-                <img src={user.profilePicture} alt="" className="shareProfileImg" />
+                <img src={user.profilePicture ? `${IMG_URL}${user.profilePicture}` : `${IMG_URL}/assets/post/1.jpeg`} alt="" className="shareProfileImg" />
                 <input ref={descRef} type="text" className="shareInput" placeholder='いまなにしてる？'/>
             </div>
         </div>
@@ -45,7 +50,7 @@ function Share() {
                     style={{display:"none"}}
                     onChange={(e)=>setFile(e.target.files[0])}/>
                 </div>
-                <div className="shareOption">
+                {/* <div className="shareOption">
                     <Gif className="shareIcon"/>
                     <span className="shareOptionText">Gif</span>
                 </div>
@@ -56,7 +61,7 @@ function Share() {
                 <div className="shareOption">
                     <Analytics className="shareIcon"/>
                     <span className="shareOptionText">投票</span>
-                </div>
+                </div> */}
             </label>
             <button type="submit" className="shareButton">投稿</button>
         </form>

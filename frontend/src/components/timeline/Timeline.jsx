@@ -9,6 +9,7 @@ import { AuthContext } from '../../states/AuthContext'
 function Timeline({username}) {
   const {user}=useContext(AuthContext)
   const [posts,setPosts] = useState([])
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
   //タイムラインのフェッチング
   const fetchPosts= async ()=>{
@@ -17,8 +18,8 @@ function Timeline({username}) {
       //apiとのやり取りは非同期
       //followingsを含めたタイムライン
       const response = username ? 
-      await axios.get(`/posts/profile/${username}`)
-      :await axios.get(`/posts/timeline/${user._id}`)
+      await axios.get(`${API_URL}/posts/profile/${username}`)
+      : await axios.get(`${API_URL}/posts/timeline/${user._id}`)
       //response.dataは各ポストの入った配列になっている
       //response.dataにいい感じのデータが入っているが関数内で定義した変数のため
       //外では直接使えない

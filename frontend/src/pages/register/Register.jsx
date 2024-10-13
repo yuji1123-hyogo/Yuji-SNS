@@ -11,6 +11,7 @@ function Register() {
 
 
   const registerCall=async (e)=>{
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
     
     e.preventDefault();
     if(passwordRef.current.value !== passwordConfirmRef.current.value){
@@ -23,7 +24,7 @@ function Register() {
             password:passwordRef.current.value,
         }
         try{
-           await axios.post("/auth/register",user)
+           await axios.post(`${API_URL}/auth/register`, user);
            window.alert("登録が完了しました！");
            navigate("/login")
         }catch(e){

@@ -17,7 +17,7 @@ const reducer=(state,action)=>{
             };
         case "ERROR":
             return {
-                user:false,
+                user:null,
                 error:action.payload};
         default:
             return state;
@@ -31,14 +31,13 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 
     const [state,dispatch]=useReducer(reducer,initialState);
-    const [dummystate, setState] = useState(0); // 0から始まるシンプルな状態
 
     useEffect(()=>{
         localStorage.setItem("user",JSON.stringify(state.user))
     },[state.user])
 
     return (
-        <AuthContext.Provider value={{ dummystate, setState ,user:state.user,dispatch}}>
+        <AuthContext.Provider value={{user:state.user,dispatch}}>
             {children}
         </AuthContext.Provider>
     );

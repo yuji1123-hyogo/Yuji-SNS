@@ -5,6 +5,8 @@ import { Users } from '../../dummyData'
 import { AuthContext } from '../../states/AuthContext'
 
 function Rightbar({user}) {
+    const IMG_URL = process.env.REACT_APP_IMAGE_URL || "http://localhost:3000";
+
     const {user:currentUser} = useContext(AuthContext)
     const HomeRightbar=()=>{
 
@@ -12,16 +14,16 @@ function Rightbar({user}) {
         <>
             <div className="eventContainer">
                 <img src="/assets/star.png" alt="" className="starImg" />
-                <span className="eventText">フォロワー限定イベント</span>
+                <span className="eventText">イベント</span>
             </div>
-            <img src="/assets/ad.jpeg" alt="" className="eventImg" />
+            <img src={`${IMG_URL}/assets/ad.jpeg`} alt="" className="eventImg" />
 
             {/* <h4 className="rightbarTitle">オンラインの友達</h4>
             <ul className="rightbarFriendList">
                 {Users.map((user)=><Online user={user} key={user.id} />)}
             </ul> */}
             <p className="promotionTitle">広告</p>
-            <img src="/assets/promotion/promotion1.jpeg" alt="" className="rightbarPromotionImg" />
+            <img src={`${IMG_URL}/assets/ad.jpeg`} alt="" className="rightbarPromotionImg" />
             <p className="promotionImg">ショッピング</p>
         </>
         )

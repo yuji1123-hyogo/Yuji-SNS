@@ -5,7 +5,9 @@ import { AuthContext } from '../../states/AuthContext';
 import { Link } from 'react-router-dom';
 
 function Login() {
-    const { dummystate, setState ,user,dispatch} = useContext(AuthContext)
+    const { user,dispatch} = useContext(AuthContext)
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+
     //ユーザーごとの画面表示に向けて
     //やること
     //①パスワード、emailの値を監視、取得　useref
@@ -63,7 +65,7 @@ function Login() {
         console.log(email_val )
         console.log(password_val  )
         try{
-            const response =await axios.post("/auth/login",{email:email_val,password:password_val})
+            const response =await axios.post(`${API_URL}/auth/login`,{email:email_val,password:password_val})
             const user = response.data
             //dispatchはstate引数を与えなくても勝手に入っていく。actionオブジェクトだけ書けばよい
             dispatch({type:"SUCCESS",payload:user})
