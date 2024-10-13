@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 
 function Login() {
     const { user,dispatch} = useContext(AuthContext)
-    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+     const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api"
+
 
     //ユーザーごとの画面表示に向けて
     //やること
