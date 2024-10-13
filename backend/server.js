@@ -20,6 +20,9 @@ mongoose.connect(mongoURI)
   .then(() => console.log("MONGODBコネクション成功！"))
   .catch(err => console.error("MongoDB接続エラー:", err));
 
+
+console.log("使用しているMongoDBのURI: ", mongoURI); // ここでどのURIが使用されているか確認
+
 // const fs = require("fs");
 
 // // サーバー起動時にディレクトリが存在するか確認
