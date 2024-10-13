@@ -6,10 +6,7 @@ const PORT = process.env.PORT || 5000;
 const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/realsns';
 
 const cors = require('cors');
-app.use(cors({
-  origin: ['https://your-frontend-url.vercel.app', 'http://localhost:3000'], // フロントエンドのURLを指定
-  credentials: true,
-}));
+app.use(cors());
 
 const userRoutes = require("./routes/users")
 const autRouter = require("./routes/auth")
