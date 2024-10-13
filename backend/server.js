@@ -1,8 +1,11 @@
-
+require('dotenv').config();
 const express = require("express");
 const mongoose = require('mongoose');
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/realsns';
+
+
 
 const cors = require('cors');
 app.use(cors()); // CORSを有効にする
@@ -12,16 +15,10 @@ const autRouter = require("./routes/auth")
 const postsRouter = require("./routes/post")
 
 // MongoDBへの接続
-mongoose.connect('mongodb://localhost:27017/realsns', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
-const db = mongoose.connection;
-db.on('error',console.error.bind(console,'conection error'));
-db.once('open',function(){
-    //we're conect!
-    console.log("MONGODBコネクション成功！");
-});
+// MongoDBへの接続
+mongoose.connect(mongoURI)
+  .then(() => console.log("MONGODBコネクション成功！"))
+  .catch(err => console.error("MongoDB接続エラー:", err));
 
 // const fs = require("fs");
 
