@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+//ポストのスキーマです
 const PostSchema = new mongoose.Schema(
   {
     userId: {
